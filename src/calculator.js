@@ -22,6 +22,20 @@ function divide(a, b) {
   return a / b;
 }
 
+function modulo(a, b) {
+  if (b === 0) throw new Error('Division by zero');
+  return a % b;
+}
+
+function power(base, exponent) {
+  return Math.pow(base, exponent);
+}
+
+function squareRoot(n) {
+  if (n < 0) throw new Error('Square root of negative number');
+  return Math.sqrt(n);
+}
+
 function compute(op, a, b) {
   const o = String(op).toLowerCase();
   switch (o) {
@@ -41,6 +55,16 @@ function compute(op, a, b) {
     case 'div':
     case '/':
       return divide(a, b);
+    case 'mod':
+    case '%':
+      return modulo(a, b);
+    case 'power':
+    case 'pow':
+    case '^':
+      return power(a, b);
+    case 'sqrt':
+      // unary operation, ignore b
+      return squareRoot(a);
     default:
       throw new Error(`Unknown operation: ${op}`);
   }
@@ -102,16 +126,35 @@ async function main(argv = process.argv.slice(2)) {
     return;
   }
 
+  const op = String(argv[0]).toLowerCase();
+
+  // Support unary sqrt: node src/calculator.js sqrt <n>
+  if (op === 'sqrt') {
+    if (argv.length !== 2) {
+      printUsage();
+      process.exit(2);
+    }
+    try {
+      const a = toNumber(argv[1]);
+      const result = squareRoot(a);
+      console.log(result);
+      process.exit(0);
+    } catch (err) {
+      console.error('Error:', err.message);
+      process.exit(1);
+    }
+  }
+
   if (argv.length !== 3) {
     printUsage();
     process.exit(2);
   }
 
-  const [op, aStr, bStr] = argv;
+  const [opRaw, aStr, bStr] = argv;
   try {
     const a = toNumber(aStr);
     const b = toNumber(bStr);
-    const result = compute(op, a, b);
+    const result = compute(opRaw, a, b);
     // Print numeric result only
     console.log(result);
     process.exit(0);
@@ -122,7 +165,7 @@ async function main(argv = process.argv.slice(2)) {
 }
 
 // Export functions for testing
-module.exports = { add, subtract, multiply, divide, compute, toNumber };
+module.exports = { add, subtract, multiply, divide, modulo, power, squareRoot, compute, toNumber };
 
 // Run CLI only when executed directly
 if (require.main === module) {
