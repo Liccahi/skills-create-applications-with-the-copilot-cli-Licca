@@ -1,0 +1,23 @@
+{
+  "name": "skills-create-applications-with-the-copilot-cli-licca",
+  "version": "1.0.0",
+  "description": "<img src=\"https://octodex.github.com/images/Professortocat_v2.png\" align=\"right\" height=\"200px\" />",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liccahi/skills-create-applications-with-the-copilot-cli-Licca.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Liccahi/skills-create-applications-with-the-copilot-cli-Licca/issues"
+  },
+  "homepage": "https://github.com/Liccahi/skills-create-applications-with-the-copilot-cli-Licca#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

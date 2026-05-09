@@ -96,8 +96,7 @@ async function runInteractive() {
 }
 
 // CLI entry
-(async function main() {
-  const argv = process.argv.slice(2);
+async function main(argv = process.argv.slice(2)) {
   if (argv.length === 0) {
     await runInteractive();
     return;
@@ -120,4 +119,12 @@ async function runInteractive() {
     console.error('Error:', err.message);
     process.exit(1);
   }
-})();
+}
+
+// Export functions for testing
+module.exports = { add, subtract, multiply, divide, compute, toNumber };
+
+// Run CLI only when executed directly
+if (require.main === module) {
+  main();
+}
